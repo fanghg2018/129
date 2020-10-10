@@ -56,6 +56,10 @@ export default {
         {
           value: 'zj',
           label: '张 健'
+        },
+        {
+          value: 'xy',
+          label: '徐 源'
         }
       ],
       soundList: [],
