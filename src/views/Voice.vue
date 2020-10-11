@@ -31,7 +31,7 @@
       <div class="totalTime" v-show="numOpen">
        {{totalTime}}
       </div>
-      <div  v-for="code in codeList" :key="code.index" class="code">{{code}}</div>
+      <div  v-for="code in codeList"  :key="code.index" class="code" ref="code">{{code}}</div>
     </div>
     <div>
       <el-button class="play" @click="play" :disabled="(btnBoolean == btnStatus)== 1 ? true : false">播 放</el-button>
@@ -105,12 +105,16 @@ export default {
         !arr.length && myAudio.removeEventListener('ended', count.bind(this), false)
       }
       function count () {
+        this.changeColor(this.count)
         this.count++
         if (this.count > 1) {
           this.imgOpen = false
         }
         if (this.count === (this.code.length + 2)) {
           this.btnBoolean = 1
+          this.$refs.code.forEach(element => {
+            element.style.removeProperty('color')
+          })
         }
       }
     },
@@ -135,6 +139,14 @@ export default {
           this.numOpen = false
         }
       }, 1000)
+    },
+    changeColor (count) {
+      const clock = setTimeout(() => {
+        this.$refs.code[count].style.color = 'red'
+      }, 280)
+      if (count >= this.codeList.length) {
+        window.clearTimeout(clock)
+      }
     }
 
   }
